@@ -9,11 +9,12 @@ export const Board = styled.div`
   align-items: center;
   flex: 1;
 
-  header {
+  > header {
     padding: 8px;
     font-size: 14px;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
   }
 `;
@@ -25,7 +26,6 @@ export const OrdersContainer = styled.div`
   margin-top: 24px;
 
   button {
-    width: 100%;
     background: #fff;
     border: 1px solid rgba(204, 204, 204, 0.4);
     height: 128px;
@@ -33,8 +33,8 @@ export const OrdersContainer = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     gap: 4px;
 
     strong {
