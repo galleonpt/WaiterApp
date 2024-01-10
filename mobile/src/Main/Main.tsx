@@ -1,11 +1,22 @@
-import { Text } from '../components/Text';
-import { Container } from './styles';
+import Header from '../components/Header';
+import { Container, CategoriesContainer, MenuContainer, Footer, FooterContainer } from './styles';
 
 const Main = () => {
     return (
-        <Container>
-            <Text>Main Component</Text>
-        </Container>
+        <>
+            <Container>
+                <Header/>
+
+                <CategoriesContainer></CategoriesContainer>
+                <MenuContainer></MenuContainer>
+            </Container>
+            <Footer>
+                <FooterContainer>
+
+                </FooterContainer>
+
+            </Footer>
+        </>
     );
 };
 
