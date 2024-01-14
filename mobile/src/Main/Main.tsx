@@ -1,3 +1,4 @@
+import Button from '../components/Button';
 import Categories from '../components/Categories';
 import Header from '../components/Header';
 import Menu from '../components/Menu';
@@ -17,11 +18,13 @@ const Main = () => {
                     <Menu/>
                 </MenuContainer>
             </Container>
+
             <Footer>
                 <FooterContainer>
-
+                    <Button onPress={()=>alert('asd')} disabled >
+                        Novo pedido
+                    </Button>
                 </FooterContainer>
-
             </Footer>
         </>
     );
