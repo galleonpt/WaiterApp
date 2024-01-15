@@ -15,6 +15,7 @@ const TableModal: FC<ITableModalProps> = ({ visible, onClose, onSave }) => {
     const [table, setTable] = useState('');
 
     const handleSave = () => {
+        setTable('');
         onSave(table);
         onClose();
     };
