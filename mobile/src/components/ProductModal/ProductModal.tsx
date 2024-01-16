@@ -11,19 +11,16 @@ interface IProductModal {
     visible: boolean;
     product: IProduct | null;
     onClose: () => void;
-    onAddToCart: (product: IProduct) => void;
 }
 
-const ProductModal: FC<IProductModal> = ({ visible, product, onClose, onAddToCart }) => {
+const ProductModal: FC<IProductModal> = ({ visible, product, onClose }) => {
     if(!product) {
         return null;
     }
 
-    function handleAddToCard() {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        onAddToCart(product!);
+    const handleAddToCard = () => {
         onClose();
-    }
+    };
 
     return (
         <Modal
