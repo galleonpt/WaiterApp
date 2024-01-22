@@ -11,14 +11,16 @@ interface IProductModal {
     visible: boolean;
     product: IProduct | null;
     onClose: () => void;
+    onAddToCart: (product: IProduct) => void;
 }
 
-const ProductModal: FC<IProductModal> = ({ visible, product, onClose }) => {
+const ProductModal: FC<IProductModal> = ({ visible, product, onClose, onAddToCart }) => {
     if(!product) {
         return null;
     }
 
     const handleAddToCard = () => {
+        onAddToCart(product!);
         onClose();
     };
 

@@ -36,9 +36,9 @@ export const Summary = styled.View`
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    gap: 32px;
 `;
 
 export const TotalContainer = styled.View`
-    margin-right: 32px;
     flex: 1;
 `;

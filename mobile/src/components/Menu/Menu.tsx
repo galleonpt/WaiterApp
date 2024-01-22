@@ -6,10 +6,14 @@ import { Product, Image, ProductDetails, Separator, AddToCartButton } from './st
 import { formatCurrency } from '../../utils/formatCurrency';
 import { PlusCircle } from '../Icons/PlusCircle';
 import ProductModal from '../ProductModal';
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { IProduct } from '../../types/Product';
 
-const Menu = () => {
+interface IMenuProps {
+    onAddToCart: (product: IProduct)=> void
+}
+
+const Menu: FC<IMenuProps> = ({onAddToCart}) => {
     const [isProductModalVisible, setIsProductModalVisible] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState<IProduct | null>(null);
 
@@ -40,7 +44,7 @@ const Menu = () => {
                             <Text size={14} weight="600">{formatCurrency(product.price)}</Text>
                         </ProductDetails>
 
-                        <AddToCartButton>
+                        <AddToCartButton onPress={() => onAddToCart(product)}>
                             <PlusCircle />
                         </AddToCartButton>
                     </Product>
@@ -51,6 +55,7 @@ const Menu = () => {
                 visible={isProductModalVisible}
                 product={selectedProduct}
                 onClose={() => setIsProductModalVisible(false)}
+                onAddToCart={onAddToCart}
             />
         </>
 

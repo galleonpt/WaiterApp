@@ -12,14 +12,24 @@ import {
     Image,
     QuantityContainer,
     ProductDetails,
+    Summary,
+    TotalContainer,
 } from './styles';
+import Button from '../Button';
+import { IProduct } from '../../types/Product';
 
 interface ICartProps {
     cartItems: ICartItem[];
     selectedTable: string;
+    onAdd: (product: IProduct) => void;
+    onDecrement: (product: IProduct) => void;
 }
 
-const Cart: FC<ICartProps> = ({ cartItems }) => {
+const Cart: FC<ICartProps> = ({ cartItems, onAdd, onDecrement }) => {
+    const total = cartItems.reduce((acc, cartItem) => {
+        return acc + cartItem.product.price * cartItem.quantity;
+    }, 0);
+
     return (
         <>
             {cartItems.length > 0 && (
@@ -46,11 +56,11 @@ const Cart: FC<ICartProps> = ({ cartItems }) => {
                                 </ProductDetails>
                             </ProductContainer>
                             <Actions>
-                                <TouchableOpacity>
-                                    <PlusCircle />
+                                <TouchableOpacity onPress={() => onAdd(cartItem.product)}>
+                                    <PlusCircle/>
                                 </TouchableOpacity>
 
-                                <TouchableOpacity>
+                                <TouchableOpacity onPress={() => onDecrement(cartItem.product)}>
                                     <MinusCircle />
                                 </TouchableOpacity>
                             </Actions>
@@ -58,6 +68,31 @@ const Cart: FC<ICartProps> = ({ cartItems }) => {
                     )}
                 />
             )}
+
+            <Summary>
+                <TotalContainer>
+                    {cartItems.length > 0 ?
+                        (
+                            <>
+                                <Text color="#666">Total</Text>
+                                <Text size={20} weight="600" >{formatCurrency(total)}</Text>
+                            </>
+                        ) :
+                        (
+                            (
+                                <Text color="#999">Seu carrinho está vazio</Text>
+                            )
+                        )}
+                </TotalContainer>
+                <Button
+                    onPress={()=> alert(123)}
+                    // onPress={handleConfirmOrder}
+                    disabled={cartItems.length === 0}
+                    // loading={isLoading}
+                >
+                    Confirmar pedido
+                </Button>
+            </Summary>
         </>
     );
 };
