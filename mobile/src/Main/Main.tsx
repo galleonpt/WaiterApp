@@ -18,7 +18,7 @@ const Main = () => {
         setSelectedTable(table);
     };
 
-    const handleCancelOrder = () => {
+    const handleResetOrder = () => {
         setSelectedTable('');
         setCartItems([]);
     };
@@ -83,7 +83,7 @@ const Main = () => {
             <Container>
                 <Header
                     selectedTable={selectedTable}
-                    onCancelOrder={handleCancelOrder}
+                    onCancelOrder={handleResetOrder}
                 />
 
                 <CategoriesContainer>
@@ -114,6 +114,7 @@ const Main = () => {
                             selectedTable={selectedTable}
                             onAdd={handleAddToCart}
                             onDecrement={handleDecrementCartItem}
+                            onConfirmOrder={handleResetOrder}
                         />
                     )}
                 </FooterContainer>
