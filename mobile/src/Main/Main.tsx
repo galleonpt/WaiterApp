@@ -4,15 +4,17 @@ import Categories from '../components/Categories';
 import Header from '../components/Header';
 import Menu from '../components/Menu';
 import TableModal from '../components/TableModal';
-import { Container, CategoriesContainer, MenuContainer, Footer, FooterContainer } from './styles';
+import { Container, CategoriesContainer, MenuContainer, Footer, FooterContainer, CenteredContainer } from './styles';
 import Cart from '../components/Cart';
 import { ICartItem } from '../types/CartItem';
 import { IProduct } from '../types/Product';
+import { ActivityIndicator } from 'react-native';
 
 const Main = () => {
     const [isTableModalVisible, setTableModalVisible] = useState(false);
     const [selectedTable, setSelectedTable] = useState('');
     const [cartItems, setCartItems] = useState<ICartItem[]>([]);
+    const [isLoading] = useState(true);
 
     const handleSaveTable = (table: string) => {
         setSelectedTable(table);
@@ -86,22 +88,33 @@ const Main = () => {
                     onCancelOrder={handleResetOrder}
                 />
 
-                <CategoriesContainer>
-                    <Categories/>
-                </CategoriesContainer>
+                {isLoading && (
+                    <CenteredContainer>
+                        <ActivityIndicator color="#d73035" size="large" />
+                    </CenteredContainer>
+                )}
 
-                <MenuContainer>
-                    <Menu
-                        onAddToCart={handleAddToCart}
-                        // products={products}
-                    />
-                </MenuContainer>
+                {!isLoading && (
+                    <>
+                        <CategoriesContainer>
+                            <Categories/>
+                        </CategoriesContainer>
+
+                        <MenuContainer>
+                            <Menu
+                                onAddToCart={handleAddToCart}
+                                // products={products}
+                            />
+                        </MenuContainer>
+                    </>
+                )}
             </Container>
 
             <Footer>
                 <FooterContainer>
                     {!selectedTable && (
                         <Button
+                            disabled={isLoading}
                             onPress={() => setTableModalVisible(true)}
                         >
                         Novo pedido
