@@ -1,5 +1,4 @@
 import { FlatList } from 'react-native';
-import { products } from '../../mocks/products';
 import { Text } from '../Text';
 
 import { Product, Image, ProductDetails, Separator, AddToCartButton } from './styles';
@@ -10,10 +9,11 @@ import { FC, useState } from 'react';
 import { IProduct } from '../../types/Product';
 
 interface IMenuProps {
+    products: IProduct[];
     onAddToCart: (product: IProduct)=> void
 }
 
-const Menu: FC<IMenuProps> = ({onAddToCart}) => {
+const Menu: FC<IMenuProps> = ({ onAddToCart, products }) => {
     const [isProductModalVisible, setIsProductModalVisible] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState<IProduct | null>(null);
 

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { ActivityIndicator } from 'react-native';
 import Button from '../components/Button';
 import Categories from '../components/Categories';
 import Header from '../components/Header';
@@ -8,13 +9,16 @@ import { Container, CategoriesContainer, MenuContainer, Footer, FooterContainer,
 import Cart from '../components/Cart';
 import { ICartItem } from '../types/CartItem';
 import { IProduct } from '../types/Product';
-import { ActivityIndicator } from 'react-native';
+import { Empty } from '../components/Icons/Empty';
+import { Text } from '../components/Text';
+
 
 const Main = () => {
     const [isTableModalVisible, setTableModalVisible] = useState(false);
     const [selectedTable, setSelectedTable] = useState('');
     const [cartItems, setCartItems] = useState<ICartItem[]>([]);
-    const [isLoading] = useState(true);
+    const [products] = useState<IProduct[]>([]);
+    const [isLoading] = useState(false);
 
     const handleSaveTable = (table: string) => {
         setSelectedTable(table);
@@ -100,12 +104,21 @@ const Main = () => {
                             <Categories/>
                         </CategoriesContainer>
 
-                        <MenuContainer>
-                            <Menu
-                                onAddToCart={handleAddToCart}
-                                // products={products}
-                            />
-                        </MenuContainer>
+                        {products.length > 0 ? (
+                            <MenuContainer>
+                                <Menu
+                                    onAddToCart={handleAddToCart}
+                                    products={products}
+                                />
+                            </MenuContainer>
+                        ) : (
+                            <CenteredContainer>
+                                <Empty />
+                                <Text color="#666" style={{ marginTop: 24 }}>
+                                    Nenhum produto encontrado
+                                </Text>
+                            </CenteredContainer>
+                        )}
                     </>
                 )}
             </Container>
