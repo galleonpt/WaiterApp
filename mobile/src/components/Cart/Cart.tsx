@@ -29,12 +29,13 @@ interface ICartProps {
 
 const Cart: FC<ICartProps> = ({ cartItems, onAdd, onDecrement, onConfirmOrder }) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [isLoading] = useState(false);
 
     const total = cartItems.reduce((acc, cartItem) => {
         return acc + cartItem.product.price * cartItem.quantity;
     }, 0);
 
-    const handleConfirOrder = () => {
+    const handleConfirmOrder = () => {
         setIsModalVisible(true);
     };
 
@@ -98,9 +99,9 @@ const Cart: FC<ICartProps> = ({ cartItems, onAdd, onDecrement, onConfirmOrder })
                         )}
                 </TotalContainer>
                 <Button
-                    onPress={handleConfirOrder}
+                    onPress={handleConfirmOrder}
                     disabled={cartItems.length === 0}
-                    // loading={isLoading}
+                    loading={isLoading}
                 >
                     Confirmar pedido
                 </Button>
