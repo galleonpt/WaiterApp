@@ -2,7 +2,7 @@ import { FC, useState } from 'react';
 import { FlatList } from 'react-native';
 import { Text } from '../Text';
 import { Category, Icon } from './styles';
-import { ICategory } from '../../types/Categoru';
+import { ICategory } from '../../types/Category';
 
 interface ICategoriesProps {
     categories: ICategory[];

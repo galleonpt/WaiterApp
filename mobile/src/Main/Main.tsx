@@ -11,7 +11,7 @@ import { ICartItem } from '../types/CartItem';
 import { IProduct } from '../types/Product';
 import { Empty } from '../components/Icons/Empty';
 import { Text } from '../components/Text';
-import { ICategory } from '../types/Categoru';
+import { ICategory } from '../types/Category';
 import { api } from '../utils/api';
 
 const Main = () => {
