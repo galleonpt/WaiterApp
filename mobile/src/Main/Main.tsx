@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ActivityIndicator } from 'react-native';
 import Button from '../components/Button';
 import Categories from '../components/Categories';
@@ -11,14 +11,17 @@ import { ICartItem } from '../types/CartItem';
 import { IProduct } from '../types/Product';
 import { Empty } from '../components/Icons/Empty';
 import { Text } from '../components/Text';
-
+import { ICategory } from '../types/Categoru';
+import { api } from '../utils/api';
 
 const Main = () => {
     const [isTableModalVisible, setTableModalVisible] = useState(false);
     const [selectedTable, setSelectedTable] = useState('');
     const [cartItems, setCartItems] = useState<ICartItem[]>([]);
-    const [products] = useState<IProduct[]>([]);
-    const [isLoading] = useState(false);
+    const [categories, setCategories] = useState<ICategory[]>([]);
+    const [products, setProducts] = useState<IProduct[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [isLoadingProducts, setIsLoadingProducts] = useState(false);
 
     const handleSaveTable = (table: string) => {
         setSelectedTable(table);
@@ -84,6 +87,29 @@ const Main = () => {
         });
     };
 
+    const handleSelectCategory = async (categoryId: string) => {
+        const route = !categoryId
+            ? 'products'
+            : `/categories/${categoryId}/products`;
+
+        setIsLoadingProducts(true);
+
+        const { data } = await api.get(route);
+        setProducts(data);
+        setIsLoadingProducts(false);
+    };
+
+    useEffect(()=>{
+        Promise.all([
+            api.get('/categories'),
+            api.get('/products'),
+        ]).then(([categoriesResponse, productsResponse]) => {
+            setCategories(categoriesResponse.data);
+            setProducts(productsResponse.data);
+            setIsLoading(false);
+        });
+    }, []);
+
     return (
         <>
             <Container>
@@ -101,24 +127,39 @@ const Main = () => {
                 {!isLoading && (
                     <>
                         <CategoriesContainer>
-                            <Categories/>
+                            <Categories
+                                categories={categories}
+                                onSelectedCategory={handleSelectCategory}
+                            />
                         </CategoriesContainer>
 
-                        {products.length > 0 ? (
-                            <MenuContainer>
-                                <Menu
-                                    onAddToCart={handleAddToCart}
-                                    products={products}
-                                />
-                            </MenuContainer>
-                        ) : (
+
+                        {isLoadingProducts ? (
                             <CenteredContainer>
-                                <Empty />
-                                <Text color="#666" style={{ marginTop: 24 }}>
-                                    Nenhum produto encontrado
-                                </Text>
+                                <ActivityIndicator color="#d73035" size="large" />
                             </CenteredContainer>
-                        )}
+                        ) : (
+                            <>
+                                {products.length > 0 ? (
+                                    <MenuContainer>
+                                        <Menu
+                                            onAddToCart={handleAddToCart}
+                                            products={products}
+                                        />
+                                    </MenuContainer>
+                                ) : (
+                                    <CenteredContainer>
+                                        <Empty />
+                                        <Text color="#666" style={{ marginTop: 24 }}>
+                                    Nenhum produto encontrado
+                                        </Text>
+                                    </CenteredContainer>
+                                )}
+                            </>
+                        )
+
+                        }
+
                     </>
                 )}
             </Container>

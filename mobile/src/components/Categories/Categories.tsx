@@ -1,14 +1,20 @@
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { FlatList } from 'react-native';
-import { categories } from '../../mocks/categories';
 import { Text } from '../Text';
 import { Category, Icon } from './styles';
+import { ICategory } from '../../types/Categoru';
 
-const Categories = () => {
+interface ICategoriesProps {
+    categories: ICategory[];
+    onSelectedCategory: (categoryId: string) => Promise<void>;
+  }
+
+const Categories: FC<ICategoriesProps> = ({ categories, onSelectedCategory }) => {
     const [selectedCategory, setSelectedCategory] = useState('');
 
     const handleSelectCategory = (categoryId: string) => {
         const category = selectedCategory === categoryId ? '' : categoryId;
+        onSelectedCategory(category);
         setSelectedCategory(category);
     };
 
