@@ -34,7 +34,7 @@ const Menu: FC<IMenuProps> = ({ onAddToCart, products }) => {
                     <Product onPress={() => handleOpenModal(product)}>
                         <Image
                             source={{
-                                uri: `http://192.168.1.5:3001/uploads/${product.imagePath}`
+                                uri: `http://192.168.1.9:3001/uploads/${product.imagePath}`
                             }}
                         />
 
