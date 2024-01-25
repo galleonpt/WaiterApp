@@ -3,6 +3,7 @@ import { IOrder } from '../../types/Order';
 import OrdersBoard from '../OrdersBoard';
 import { Container } from './styles';
 import { api } from '../../utils/api';
+import socketIo from 'socket.io-client';
 
 export default function Orders() {
   const [orders, setOrders] = useState<IOrder[]>([]);
@@ -26,6 +27,16 @@ export default function Orders() {
   };
 
   useEffect(() => {
+    const socket = socketIo('http://localhost:3001', {
+      transports: ['websocket'],
+    });
+    socket.on('order@new', (order) => {
+      setOrders((prevState) => prevState.concat(order));
+    });
+  }, []);
+
+  useEffect(() => {
+    console.log('effect');
     api.get('/orders')
       .then(({ data }) => {
         setOrders(data);
