@@ -3,6 +3,7 @@ import { IOrder } from '../../types/Order';
 import OrderModal from '../OrderModal';
 import { Board, OrdersContainer } from './styles';
 import { api } from '../../utils/api';
+import { toast } from 'react-toastify';
 
 interface IOrdersBoardProps {
   icon: string;
@@ -38,7 +39,7 @@ export default function OrdersBoard({
 
     await api.delete(`/orders/${selectedOrder?._id}`);
 
-    // toast.success(`O pedido da mesa ${selectedOrder?.table} foi cancelado com sucesso!`);
+    toast.success(`O pedido da mesa ${selectedOrder?.table} foi cancelado com sucesso!`);
     onCancelOrder(selectedOrder!._id);
     setIsLoading(false);
     setIsModalOpened(false);
