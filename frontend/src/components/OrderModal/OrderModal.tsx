@@ -7,13 +7,18 @@ import { useEffect } from 'react';
 interface IOrderModalProps {
   visible: boolean;
   order: IOrder | null;
+  isLoading: boolean;
   onClose: () => void;
+  onCancelOrder: () => Promise<void>;
+  onChangeOrderStatus?: () => void;
 }
 
 export default function OrderModal({
   visible,
   order,
+  isLoading,
   onClose,
+  onCancelOrder
 }: IOrderModalProps) {
   useEffect(() => {
     function handleKeyDow(event: KeyboardEvent) {
@@ -93,7 +98,7 @@ export default function OrderModal({
             <button
               type="button"
               className="primary"
-              // disabled={isLoading}
+              disabled={isLoading}
               // onClick={onChangeOrderStatus}
             >
               <span>
@@ -109,8 +114,8 @@ export default function OrderModal({
           <button
             type="button"
             className="secondary"
-            // disabled={isLoading}
-            // onClick={onCancelOrder}
+            disabled={isLoading}
+            onClick={onCancelOrder}
           >
             <span>❌</span>
             <strong>Cancelar Pedido</strong>
