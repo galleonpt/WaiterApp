@@ -20,7 +20,7 @@ const Main = () => {
     const [cartItems, setCartItems] = useState<ICartItem[]>([]);
     const [categories, setCategories] = useState<ICategory[]>([]);
     const [products, setProducts] = useState<IProduct[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const [isLoadingProducts, setIsLoadingProducts] = useState(false);
 
     const handleSaveTable = (table: string) => {

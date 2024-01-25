@@ -6,6 +6,7 @@ import { CloseButton, Footer, FooterContainer, Header, Image, Ingredient, Ingred
 import { Close } from '../Icons/Close';
 import Button from '../Button';
 import { formatCurrency } from '../../utils/formatCurrency';
+import { BASE_URL } from '../../utils/api';
 
 interface IProductModal {
     visible: boolean;
@@ -31,7 +32,7 @@ const ProductModal: FC<IProductModal> = ({ visible, product, onClose, onAddToCar
         >
             <Image
                 source={{
-                    uri: `http://192.168.1.9:3001/uploads/${product.imagePath}`
+                    uri: `${BASE_URL}/uploads/${product.imagePath}`
                 }}
             >
                 <CloseButton onPress={onClose}>

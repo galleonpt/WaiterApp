@@ -18,7 +18,7 @@ import {
 import Button from '../Button';
 import { IProduct } from '../../types/Product';
 import OrderConfirmedModal from '../OrderConfirmedModal';
-import { api } from '../../utils/api';
+import { BASE_URL, api } from '../../utils/api';
 
 interface ICartProps {
     cartItems: ICartItem[];
@@ -68,7 +68,7 @@ const Cart: FC<ICartProps> = ({ selectedTable, cartItems, onAdd, onDecrement, on
                             <ProductContainer>
                                 <Image
                                     source={{
-                                        uri: `http://192.168.1.9:3001/uploads/${cartItem.product.imagePath}`
+                                        uri: `${BASE_URL}/uploads/${cartItem.product.imagePath}`
                                     }}
                                 />
                                 <QuantityContainer>

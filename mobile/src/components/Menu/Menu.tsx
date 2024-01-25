@@ -7,6 +7,7 @@ import { PlusCircle } from '../Icons/PlusCircle';
 import ProductModal from '../ProductModal';
 import { FC, useState } from 'react';
 import { IProduct } from '../../types/Product';
+import { BASE_URL } from '../../utils/api';
 
 interface IMenuProps {
     products: IProduct[];
@@ -34,7 +35,7 @@ const Menu: FC<IMenuProps> = ({ onAddToCart, products }) => {
                     <Product onPress={() => handleOpenModal(product)}>
                         <Image
                             source={{
-                                uri: `http://192.168.1.9:3001/uploads/${product.imagePath}`
+                                uri: `${BASE_URL}/uploads/${product.imagePath}`
                             }}
                         />
 
