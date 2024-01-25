@@ -95,7 +95,6 @@ const Main = () => {
         setIsLoadingProducts(true);
 
         const { data } = await api.get(route);
-        console.log(data);
         setProducts(data);
         setIsLoadingProducts(false);
     };
