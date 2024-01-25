@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { useState } from 'react';
 import { IOrder } from '../../types/Order';
 import OrderModal from '../OrderModal';
@@ -45,6 +46,19 @@ export default function OrdersBoard({
     setIsModalOpened(false);
   };
 
+  const handleChangeOrderStatus = async () => {
+    setIsLoading(true);
+
+    const status = selectedOrder?.status === 'WAITING' ? 'IN_PRODUCTION' : 'DONE';
+
+    await api.patch(`/orders/${selectedOrder?._id}`, { status });
+
+    toast.success(`O pedido da mesa ${selectedOrder?.table} teve o status alterado`);
+    onChangeOrderStatus(selectedOrder!._id, status);
+    setIsLoading(false);
+    setIsModalOpened(false);
+  };
+
   return (
     <Board>
       <OrderModal
@@ -53,6 +67,7 @@ export default function OrdersBoard({
         isLoading={isLoading}
         onClose={handleCloseModal}
         onCancelOrder={handleCancelOrder}
+        onChangeOrderStatus={handleChangeOrderStatus}
       />
 
       <header>
